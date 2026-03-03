@@ -196,7 +196,21 @@ export default function AdminImagenes() {
         </div>
       )}
       {images.length === 0 && !loading && (
-        <p className="text-center text-gray-500 py-8">No hay imágenes. Subí una desde el botón Nueva / Subir.</p>
+        <div className="space-y-6">
+          <p className="text-center text-gray-500">No hay imágenes. Subí una desde el botón <strong>Nueva / Subir</strong>.</p>
+          <div className="border-2 border-dashed border-gray-200 rounded-xl p-8 bg-gray-50/50 max-w-xl mx-auto">
+            <p className="text-sm font-medium text-gray-700 mb-2">Así funciona el CRUD en esta sección:</p>
+            <ul className="text-sm text-gray-600 space-y-1 list-disc list-inside">
+              <li><strong>Crear:</strong> botón Nueva / Subir → completá el formulario y Guardar.</li>
+              <li><strong>Ver:</strong> las imágenes que subas aparecerán acá en una grilla.</li>
+              <li><strong>Editar:</strong> pasá el mouse sobre una imagen y tocá el ícono del lápiz.</li>
+              <li><strong>Eliminar:</strong> pasá el mouse sobre una imagen y tocá el ícono del papelera.</li>
+            </ul>
+            <p className="text-xs text-amber-700 mt-4 pt-4 border-t border-amber-100">
+              Si subís una imagen y no aparece en la lista, ejecutá en Supabase → SQL Editor los archivos <code className="bg-white px-1 rounded">004_storage_policies.sql</code> y <code className="bg-white px-1 rounded">005_images_rls.sql</code> (políticas de Storage y de la tabla images).
+            </p>
+          </div>
+        </div>
       )}
 
       {modalOpen && (
