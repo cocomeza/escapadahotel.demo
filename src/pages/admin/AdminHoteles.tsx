@@ -121,10 +121,10 @@ export default function AdminHoteles() {
                   <td className="py-3 px-4 text-gray-600">{h.rating}</td>
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-2">
-                      <button onClick={() => openEdit(h)} className="p-2 text-cyan-600 hover:bg-cyan-50 rounded-lg">
+                      <button onClick={() => openEdit(h)} className="p-2 text-cyan-600 hover:bg-cyan-50 rounded-lg" title="Editar">
                         <Pencil className="w-4 h-4" />
                       </button>
-                      <button onClick={() => handleDelete(h.id)} className="p-2 text-red-600 hover:bg-red-50 rounded-lg">
+                      <button onClick={() => handleDelete(h.id)} className="p-2 text-red-600 hover:bg-red-50 rounded-lg" title="Eliminar">
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
