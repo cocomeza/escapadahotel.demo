@@ -243,19 +243,19 @@ export default function AdminOverview() {
       </div>
 
       <div className="mt-8 bg-white rounded-xl border border-gray-200 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">Alojamientos</h2>
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">Habitaciones</h2>
         {loading ? (
           <p className="text-gray-500">Cargando...</p>
-        ) : hotels.length === 0 ? (
-          <p className="text-gray-500">No hay alojamientos. Creá uno en Hoteles / Cabañas.</p>
+        ) : totalRooms === 0 ? (
+          <p className="text-gray-500">No hay habitaciones. Creá tipos (Suite, Doble, etc.) en Habitaciones.</p>
         ) : (
           <ul className="space-y-2">
-            {hotels.slice(0, 5).map((h) => (
-              <li key={h.id} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
-                <span className="font-medium text-gray-800">{h.name}</span>
-                <Link to="/admin/hoteles" className="text-cyan-500 text-sm hover:underline">Editar</Link>
+            {hotels.flatMap((h) => (h.rooms ?? []).map((r) => (
+              <li key={r.id} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
+                <span className="font-medium text-gray-800">{r.name}</span>
+                <Link to="/admin/habitaciones" className="text-cyan-500 text-sm hover:underline">Editar</Link>
               </li>
-            ))}
+            ))).slice(0, 10)}
           </ul>
         )}
       </div>
