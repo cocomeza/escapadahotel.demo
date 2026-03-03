@@ -65,6 +65,16 @@ export default function AdminOverview() {
       <h1 className="text-2xl font-bold text-gray-800 mb-2">Recepción</h1>
       <p className="text-gray-500 text-sm mb-6">Resumen del día · {today}</p>
 
+      {/* Guía corta: habitaciones para la web */}
+      <div className="mb-8 p-4 bg-cyan-50 border border-cyan-200 rounded-xl">
+        <h2 className="font-semibold text-gray-800 mb-2">Mostrar habitaciones a los huéspedes</h2>
+        <ol className="text-sm text-gray-700 list-decimal list-inside space-y-1">
+          <li><Link to="/admin/hoteles" className="text-cyan-600 font-medium hover:underline">Hoteles</Link> → Crear alojamiento.</li>
+          <li><Link to="/admin/habitaciones" className="text-cyan-600 font-medium hover:underline">Habitaciones</Link> → Crear tipo (Suite, Doble, Triple) con precio y descripción.</li>
+          <li>En cada fila de Habitaciones usá <strong>Subir foto</strong> para la imagen que verán en la web.</li>
+        </ol>
+      </div>
+
       {/* Recepción: llegadas, salidas, en casa */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <Link

@@ -109,7 +109,10 @@ export default function AdminHabitaciones() {
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Habitaciones</h1>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-800">Habitaciones</h1>
+          <p className="text-sm text-gray-500 mt-0.5">Tipos de habitación (Suite, Doble, Triple…) que ven los huéspedes en la web.</p>
+        </div>
         <button
           onClick={openCreate}
           disabled={hotels.length === 0}
@@ -209,6 +212,7 @@ export default function AdminHabitaciones() {
                   required
                   value={form.name}
                   onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+                  placeholder="Ej. Suite, Doble, Triple"
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500"
                 />
               </div>
@@ -219,6 +223,7 @@ export default function AdminHabitaciones() {
                   rows={2}
                   value={form.description}
                   onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+                  placeholder="Breve descripción para la web"
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500"
                 />
               </div>

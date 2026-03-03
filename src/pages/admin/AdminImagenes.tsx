@@ -180,7 +180,7 @@ export default function AdminImagenes() {
           className="inline-flex items-center gap-2 bg-cyan-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-cyan-600"
         >
           <Plus className="w-5 h-5" />
-          Nueva / Subir
+          Subir imagen
         </button>
       </div>
 
@@ -219,47 +219,34 @@ export default function AdminImagenes() {
         </div>
       )}
       {images.length === 0 && !loading && (
-        <div className="space-y-6">
-          <p className="text-center text-gray-500">No hay imágenes. Subí una desde el botón <strong>Nueva / Subir</strong>.</p>
-          <div className="border-2 border-dashed border-gray-200 rounded-xl p-8 bg-gray-50/50 max-w-xl mx-auto">
-            <p className="text-sm font-medium text-gray-700 mb-2">Así funciona el CRUD en esta sección:</p>
-            <ul className="text-sm text-gray-600 space-y-1 list-disc list-inside">
-              <li><strong>Crear:</strong> botón Nueva / Subir → completá el formulario y Guardar.</li>
-              <li><strong>Ver:</strong> las imágenes que subas aparecerán acá en una grilla.</li>
-              <li><strong>Editar:</strong> pasá el mouse sobre una imagen y tocá el ícono del lápiz.</li>
-              <li><strong>Eliminar:</strong> pasá el mouse sobre una imagen y tocá el ícono del papelera.</li>
-            </ul>
-            <p className="text-xs text-amber-700 mt-4 pt-4 border-t border-amber-100">
-              Si subís una imagen y no aparece en la lista, ejecutá en Supabase → SQL Editor los archivos <code className="bg-white px-1 rounded">004_storage_policies.sql</code> y <code className="bg-white px-1 rounded">005_images_rls.sql</code> (políticas de Storage y de la tabla images).
-            </p>
-          </div>
-        </div>
+        <p className="text-center text-gray-500 py-6">No hay imágenes. Usá <strong>Nueva / Subir</strong> o desde Habitaciones el enlace <strong>Subir foto</strong> de cada fila.</p>
       )}
 
       {modalOpen && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between p-4 border-b">
-              <h2 className="text-lg font-bold text-gray-800">{editing ? 'Editar imagen' : 'Subir / Nueva imagen'}</h2>
+              <h2 className="text-lg font-bold text-gray-800">{editing ? 'Editar imagen' : 'Subir imagen'}</h2>
               <button onClick={() => setModalOpen(false)} className="p-2 hover:bg-gray-100 rounded-lg">
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <p className="px-4 pt-3 text-sm text-gray-600 bg-gray-50 border-b">
-              <strong>Galería:</strong> todas las imágenes aparecen ahí. <strong>Habitaciones:</strong> elegí Alojamiento y después Habitación para que sea la foto de esa habitación.
-            </p>
             <form onSubmit={handleSubmit} className="p-4 space-y-4">
               {hotels.length === 0 && (
-                <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-sm space-y-2">
-                  <p>No hay alojamientos cargados. Para asignar imágenes a un hotel o a una habitación:</p>
-                  <ol className="list-decimal list-inside space-y-1">
-                    <li>Creá un alojamiento en <Link to="/admin/hoteles" className="text-cyan-600 font-medium hover:underline">Hoteles / Cabañas</Link>.</li>
-                    <li>Creá habitaciones (doble, suite, etc.) en <Link to="/admin/habitaciones" className="text-cyan-600 font-medium hover:underline">Habitaciones</Link>.</li>
-                    <li>Volvé acá y elegí Alojamiento y Habitación al subir la imagen.</li>
-                  </ol>
-                  <p className="pt-1">Podés subir igual (se guardará como general y aparecerá en la Galería).</p>
+                <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-sm">
+                  Creá primero un alojamiento en <Link to="/admin/hoteles" className="text-cyan-600 font-medium hover:underline">Hoteles</Link> y habitaciones en <Link to="/admin/habitaciones" className="text-cyan-600 font-medium hover:underline">Habitaciones</Link>. Mientras tanto podés subir igual (aparecerá en Galería).
                 </div>
               )}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Subir archivo</label>
+                <div className="flex items-center gap-2">
+                  <label className="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                    <Upload className="w-5 h-5 text-gray-500" />
+                    <span className="text-sm">{uploadFile ? uploadFile.name : 'Elegir imagen'}</span>
+                    <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+                  </label>
+                </div>
+              </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Alojamiento</label>
                 <select
@@ -275,51 +262,38 @@ export default function AdminImagenes() {
               </div>
               {form.hotel_id && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Habitación (opcional)</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Habitación</label>
                   <select
                     value={form.room_id}
                     onChange={(e) => setForm((f) => ({ ...f, room_id: e.target.value }))}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500"
                   >
-                    <option value="">— (imagen del alojamiento / galería)</option>
+                    <option value="">— (imagen del alojamiento)</option>
                     {(hotels.find((h) => h.id === form.hotel_id)?.rooms ?? []).map((r) => (
                       <option key={r.id} value={r.id}>{r.name}</option>
                     ))}
                   </select>
-                  <p className="text-xs text-gray-500 mt-1">Si elegís una habitación, esta imagen se usa como foto de esa habitación en la sección Habitaciones.</p>
+                  <p className="text-xs text-gray-500 mt-1">Si elegís una habitación, esta foto se muestra en Habitaciones.</p>
                 </div>
               )}
-              <div className="p-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-600 text-sm">
-                <strong>Dónde se muestra:</strong> Todas las imágenes aparecen en la <strong>Galería</strong>. Si elegís un alojamiento, también en el detalle de ese hotel. Si además elegís una habitación, se usa como foto de esa habitación en Habitaciones.
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Subir archivo</label>
-                <div className="flex items-center gap-2">
-                  <label className="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
-                    <Upload className="w-5 h-5 text-gray-500" />
-                    <span className="text-sm">{uploadFile ? uploadFile.name : 'Elegir imagen'}</span>
-                    <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
-                  </label>
-                </div>
-                {uploadFile && <p className="text-xs text-gray-500 mt-1">Se usará esta imagen en lugar de la URL.</p>}
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">URL (si no subís archivo)</label>
-                <input
-                  type="url"
-                  value={form.url}
-                  onChange={(e) => setForm((f) => ({ ...f, url: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500"
-                  placeholder="Ej. https://..."
-                />
-              </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Texto alternativo *</label>
                 <input
                   required
                   value={form.alt_text}
                   onChange={(e) => setForm((f) => ({ ...f, alt_text: e.target.value }))}
+                  placeholder="Ej. Suite con vista al lago"
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">URL (opcional, si no subís archivo)</label>
+                <input
+                  type="url"
+                  value={form.url}
+                  onChange={(e) => setForm((f) => ({ ...f, url: e.target.value }))}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500"
+                  placeholder="https://..."
                 />
               </div>
               <div>
