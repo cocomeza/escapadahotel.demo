@@ -41,16 +41,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Nuestras habitaciones */}
+      {/* Nuestras habitaciones: se muestra al cargar o si hay habitaciones; sin placeholder "próximamente" */}
+      {(loading || rooms.length > 0) && (
       <section className="py-12 md:py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-10">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-2">
               Nuestras habitaciones
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base">
-              Elegí la opción que mejor se adapte a tu estadía
-            </p>
           </div>
 
           {error && (
@@ -71,19 +69,6 @@ export default function HomePage() {
                   </div>
                 </div>
               ))}
-            </div>
-          ) : rooms.length === 0 ? (
-            <div className="text-center py-12 px-4 bg-white rounded-xl border border-gray-200">
-              <p className="text-gray-500 mb-4">
-                Próximamente publicaremos nuestras habitaciones. Mientras tanto, contactanos para consultas.
-              </p>
-              <button
-                type="button"
-                onClick={() => navigate('/contacto')}
-                className="text-cyan-500 font-medium hover:underline"
-              >
-                Ir a contacto
-              </button>
             </div>
           ) : (
             <>
@@ -110,7 +95,7 @@ export default function HomePage() {
                   </button>
                 </div>
               )}
-              {rooms.length > 0 && rooms.length <= 6 && (
+              {rooms.length <= 6 && (
                 <div className="text-center mt-8">
                   <button
                     type="button"
@@ -125,6 +110,7 @@ export default function HomePage() {
           )}
         </div>
       </section>
+      )}
 
       <Features />
       <Gallery />
