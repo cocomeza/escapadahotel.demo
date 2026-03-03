@@ -197,6 +197,9 @@ export default function AdminImagenes() {
                 <X className="w-5 h-5" />
               </button>
             </div>
+            <p className="px-4 pt-3 text-sm text-gray-600 bg-gray-50 border-b">
+              <strong>Galería:</strong> todas las imágenes aparecen ahí. <strong>Habitaciones:</strong> elegí Alojamiento y después Habitación para que sea la foto de esa habitación.
+            </p>
             <form onSubmit={handleSubmit} className="p-4 space-y-4">
               {hotels.length === 0 && (
                 <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-sm">
@@ -207,14 +210,33 @@ export default function AdminImagenes() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Alojamiento</label>
                 <select
                   value={form.hotel_id}
-                  onChange={(e) => setForm((f) => ({ ...f, hotel_id: e.target.value }))}
+                  onChange={(e) => setForm((f) => ({ ...f, hotel_id: e.target.value, room_id: '' }))}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500"
                 >
-                  <option value="">—</option>
+                  <option value="">— (solo Galería)</option>
                   {hotels.map((h) => (
                     <option key={h.id} value={h.id}>{h.name}</option>
                   ))}
                 </select>
+              </div>
+              {form.hotel_id && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Habitación (opcional)</label>
+                  <select
+                    value={form.room_id}
+                    onChange={(e) => setForm((f) => ({ ...f, room_id: e.target.value }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500"
+                  >
+                    <option value="">— (imagen del alojamiento / galería)</option>
+                    {(hotels.find((h) => h.id === form.hotel_id)?.rooms ?? []).map((r) => (
+                      <option key={r.id} value={r.id}>{r.name}</option>
+                    ))}
+                  </select>
+                  <p className="text-xs text-gray-500 mt-1">Si elegís una habitación, esta imagen se usa como foto de esa habitación en la sección Habitaciones.</p>
+                </div>
+              )}
+              <div className="p-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-600 text-sm">
+                <strong>Dónde se muestra:</strong> Todas las imágenes aparecen en la <strong>Galería</strong>. Si elegís un alojamiento, también en el detalle de ese hotel. Si además elegís una habitación, se usa como foto de esa habitación en Habitaciones.
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Subir archivo</label>
