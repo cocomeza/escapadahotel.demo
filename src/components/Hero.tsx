@@ -46,7 +46,7 @@ export default function Hero({ onSearch }: HeroProps) {
             <div className="flex items-center space-x-3 border-b sm:border-b-0 sm:border-r border-gray-200 pb-3 sm:pb-0 sm:pr-3 md:pr-4">
               <Calendar className="w-5 h-5 text-cyan-500 flex-shrink-0" aria-hidden />
               <div className="flex-1 min-w-0">
-                <label className="block text-xs text-gray-500 mb-1">Check-in</label>
+                <label className="block text-xs text-gray-500 mb-1">Entrada</label>
                 <input
                   type="date"
                   value={checkIn}
@@ -60,7 +60,7 @@ export default function Hero({ onSearch }: HeroProps) {
             <div className="flex items-center space-x-3 border-b sm:border-b-0 sm:border-r border-gray-200 pb-3 sm:pb-0 sm:pr-3 md:pr-4">
               <Calendar className="w-5 h-5 text-cyan-500 flex-shrink-0" aria-hidden />
               <div className="flex-1 min-w-0">
-                <label className="block text-xs text-gray-500 mb-1">Check-out</label>
+                <label className="block text-xs text-gray-500 mb-1">Salida</label>
                 <input
                   type="date"
                   value={checkOut}

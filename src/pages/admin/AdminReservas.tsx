@@ -209,8 +209,8 @@ export default function AdminReservas() {
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Huésped</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Alojamiento</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Habitación</th>
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">Check-in</th>
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">Check-out</th>
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">Entrada</th>
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">Salida</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Total</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Estado</th>
                 <th className="w-40 py-3 px-4"></th>
@@ -247,10 +247,10 @@ export default function AdminReservas() {
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-1 flex-wrap">
                       {!r.checked_in_at && r.status !== 'cancelled' && r.check_in <= today && (
-                        <Link to={`/admin/reservas?checkin=${r.id}`} className="p-2 text-green-600 hover:bg-green-50 rounded-lg" title="Check-in"><LogIn className="w-4 h-4" /></Link>
+                        <Link to={`/admin/reservas?checkin=${r.id}`} className="p-2 text-green-600 hover:bg-green-50 rounded-lg" title="Registrar entrada"><LogIn className="w-4 h-4" /></Link>
                       )}
                       {r.checked_in_at && !r.checked_out_at && (
-                        <Link to={`/admin/reservas?checkout=${r.id}`} className="p-2 text-amber-600 hover:bg-amber-50 rounded-lg" title="Check-out"><LogOut className="w-4 h-4" /></Link>
+                        <Link to={`/admin/reservas?checkout=${r.id}`} className="p-2 text-amber-600 hover:bg-amber-50 rounded-lg" title="Registrar salida"><LogOut className="w-4 h-4" /></Link>
                       )}
                       <Link to={`/admin/folio/${r.id}`} className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg" title="Folio"><Receipt className="w-4 h-4" /></Link>
                       <button onClick={() => openEdit(r)} className="p-2 text-cyan-600 hover:bg-cyan-50 rounded-lg" title="Editar"><Pencil className="w-4 h-4" /></button>
@@ -319,7 +319,7 @@ export default function AdminReservas() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Correo electrónico *</label>
                   <input
                     type="email"
                     required
@@ -339,7 +339,7 @@ export default function AdminReservas() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Check-in *</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Entrada *</label>
                   <input
                     type="date"
                     required
@@ -349,7 +349,7 @@ export default function AdminReservas() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Check-out *</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Salida *</label>
                   <input
                     type="date"
                     required

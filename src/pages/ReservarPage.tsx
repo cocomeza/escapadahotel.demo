@@ -200,7 +200,7 @@ export default function ReservarPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Correo electrónico *</label>
               <input
                 type="email"
                 required
@@ -232,7 +232,7 @@ export default function ReservarPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Check-out *</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Salida *</label>
               <input
                 type="date"
                 required

@@ -126,6 +126,8 @@ Migraciones en `supabase/migrations/`. **Orden de ejecución en el SQL Editor de
 2. **`002_room_status.sql`** — columnas en `rooms`: `status_override`, `cleaned_at`.
 3. **`003_pms_extended.sql`** — columnas en `reservations` (check-in/out, solicitudes) y tablas `reservation_charges`, `reservation_payments`, `cleaning_assignments`.
 
+**Para que la web muestre habitaciones e imágenes:** después de las migraciones, entrá al panel de administración (crear usuario en Auth si falta), creá al menos un **hotel** y varias **habitaciones**. Opcionalmente subí **imágenes** por habitación en Admin → Imágenes; si no hay imagen, se usa una por defecto según el nombre de la habitación.
+
 ---
 
 ## Variables de entorno

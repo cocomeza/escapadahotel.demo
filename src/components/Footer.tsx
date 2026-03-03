@@ -22,7 +22,7 @@ export default function Footer() {
             </p>
             <p className="text-gray-500 text-xs mt-2 flex items-center gap-1">
               <Clock className="w-3.5 h-3.5" aria-hidden />
-              Check-in {HOTEL_ESCAPADA.checkIn} · Check-out {HOTEL_ESCAPADA.checkOut}
+              Entrada {HOTEL_ESCAPADA.checkIn} · Salida {HOTEL_ESCAPADA.checkOut}
             </p>
           </div>
 

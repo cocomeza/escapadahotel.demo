@@ -1,6 +1,9 @@
 import { Users, Maximize2 } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { Room } from '../lib/supabase';
-import { formatearPrecio } from '../lib/constants';
+import { formatearPrecio, getRoomPlaceholderImage } from '../lib/constants';
+
+const DEFAULT_ROOM_IMAGE = 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800';
 
 interface RoomCardProps {
   room: Room;
@@ -11,13 +14,24 @@ interface RoomCardProps {
 }
 
 export default function RoomCard({ room, hotelId, imageUrl, onReservar, onVerMas }: RoomCardProps) {
+  const [imgSrc, setImgSrc] = useState(() => imageUrl || getRoomPlaceholderImage(room.name) || DEFAULT_ROOM_IMAGE);
+
+  useEffect(() => {
+    if (imageUrl) setImgSrc(imageUrl);
+  }, [imageUrl]);
+
+  const handleImageError = () => {
+    setImgSrc(getRoomPlaceholderImage(room.name) || DEFAULT_ROOM_IMAGE);
+  };
+
   return (
     <article className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col">
       <div className="relative h-48 sm:h-52 md:h-56 overflow-hidden">
         <img
-          src={imageUrl || 'https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg'}
+          src={imgSrc}
           alt={room.name}
           className="w-full h-full object-cover"
+          onError={handleImageError}
         />
         <div className="absolute bottom-3 left-3 right-3 flex justify-between items-end">
           <span className="bg-white/95 text-gray-800 text-sm font-semibold px-2.5 py-1 rounded">

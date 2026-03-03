@@ -209,7 +209,7 @@ export default function AdminHoteles() {
                   value={form.main_image}
                   onChange={(e) => setForm((f) => ({ ...f, main_image: e.target.value }))}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500"
-                  placeholder="https://..."
+                  placeholder="Ej. https://..."
                 />
               </div>
               <div className="flex gap-2 pt-4">

@@ -141,7 +141,7 @@ export default function AdminOverview() {
                     to={`/admin/reservas?checkin=${r.id}`}
                     className="text-green-600 text-sm font-medium hover:underline"
                   >
-                    Check-in
+                    Entrada
                   </Link>
                 </li>
               ))
@@ -167,7 +167,7 @@ export default function AdminOverview() {
                     to={`/admin/reservas?checkout=${r.id}`}
                     className="text-amber-600 text-sm font-medium hover:underline"
                   >
-                    Check-out
+                    Salida
                   </Link>
                 </li>
               ))

@@ -101,7 +101,7 @@ export default function HotelesPage() {
               <h3 className="text-base font-semibold text-gray-800 mb-3">Filtrar por fechas</h3>
               <div className="flex flex-wrap items-end gap-3">
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">Check-in</label>
+                  <label className="block text-xs text-gray-500 mb-1">Entrada</label>
                   <input
                     type="date"
                     value={checkIn}
@@ -115,7 +115,7 @@ export default function HotelesPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">Check-out</label>
+                  <label className="block text-xs text-gray-500 mb-1">Salida</label>
                   <input
                     type="date"
                     value={checkOut}
@@ -192,13 +192,17 @@ export default function HotelesPage() {
           )
         ) : filteredHotels.length === 0 ? (
           <div className="text-center py-12 sm:py-16 px-4 bg-white rounded-xl border border-gray-200">
-            <p className="text-gray-500 text-lg">No hay habitaciones que coincidan con los filtros.</p>
+            <p className="text-gray-500 text-lg">
+              {hotels.length === 0
+                ? 'Aún no hay hoteles ni habitaciones cargados. Entrá al panel de administración para crear el hotel y las habitaciones; después se verán aquí con sus imágenes.'
+                : 'No hay habitaciones que coincidan con los filtros.'}
+            </p>
             <button
               type="button"
-              onClick={() => setFilters({ location: '', minPrice: 0, maxPrice: PRECIO_MAX_DEFAULT, rating: 0 })}
+              onClick={() => hotels.length === 0 ? navigate('/admin/login') : setFilters({ location: '', minPrice: 0, maxPrice: PRECIO_MAX_DEFAULT, rating: 0 })}
               className="mt-4 text-cyan-500 font-medium hover:underline touch-manipulation"
             >
-              Limpiar filtros
+              {hotels.length === 0 ? 'Ir al panel de administración' : 'Limpiar filtros'}
             </button>
           </div>
         ) : (

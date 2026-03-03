@@ -24,9 +24,6 @@ export default function GaleriaPage() {
     <div className="py-12 md:py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 sm:mb-12">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            Galería
-          </h1>
           <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base">
             Conocé las instalaciones del Hotel Escapada en la Provincia de Buenos Aires
           </p>

@@ -120,7 +120,14 @@ export default function AdminImagenes() {
       setModalOpen(false);
       loadImages();
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Error al guardar');
+      const msg =
+        err && typeof err === 'object' && 'message' in err
+          ? String((err as { message: unknown }).message)
+          : err instanceof Error
+            ? err.message
+            : 'Error al guardar';
+      const details = err && typeof err === 'object' && 'details' in err ? (err as { details: unknown }).details : null;
+      setError(details ? `${msg} (${JSON.stringify(details)})` : msg);
     } finally {
       setSaving(false);
     }
@@ -147,13 +154,11 @@ export default function AdminImagenes() {
         </button>
       </div>
 
+      {/* Sin texto de instrucciones de bucket; ver DEPLOY.md para configuración en Supabase */}
+
       {error && (
         <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">{error}</div>
       )}
-
-      <p className="text-sm text-gray-500 mb-4">
-        Creá un bucket en Supabase Storage llamado <code className="bg-gray-100 px-1 rounded">hotel-images</code> y activá acceso público de lectura para que las imágenes se vean en la app.
-      </p>
 
       {loading ? (
         <div className="bg-white rounded-xl border border-gray-200 p-8 text-center text-gray-500">Cargando...</div>
@@ -225,7 +230,7 @@ export default function AdminImagenes() {
                   value={form.url}
                   onChange={(e) => setForm((f) => ({ ...f, url: e.target.value }))}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500"
-                  placeholder="https://..."
+                  placeholder="Ej. https://..."
                 />
               </div>
               <div>

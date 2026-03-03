@@ -36,7 +36,7 @@ export default function HomePage() {
             {HOTEL_ESCAPADA.bienvenida}
           </p>
           <p className="text-sm text-gray-500 mt-4">
-            Check-in desde las {HOTEL_ESCAPADA.checkIn} · Check-out hasta las {HOTEL_ESCAPADA.checkOut}
+            Entrada desde las {HOTEL_ESCAPADA.checkIn} · Salida hasta las {HOTEL_ESCAPADA.checkOut}
           </p>
         </div>
       </section>

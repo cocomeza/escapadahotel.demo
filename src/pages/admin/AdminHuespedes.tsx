@@ -91,7 +91,7 @@ export default function AdminHuespedes() {
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Huésped</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Contacto</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Habitación</th>
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">Check-in / Check-out</th>
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">Entrada / Salida</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Estado</th>
                 <th className="w-24 py-3 px-4"></th>
               </tr>

@@ -54,7 +54,7 @@ export default function ContactoPage() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="contact-email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                  <label htmlFor="contact-email" className="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
                   <input
                     id="contact-email"
                     type="email"

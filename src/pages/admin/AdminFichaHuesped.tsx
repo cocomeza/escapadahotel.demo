@@ -99,7 +99,7 @@ export default function AdminFichaHuesped() {
               <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
                 <Mail className="w-5 h-5 text-gray-400" />
                 <div>
-                  <p className="text-xs text-gray-500">Email</p>
+                  <p className="text-xs text-gray-500">Correo electrónico</p>
                   <p className="font-medium text-gray-800">{r.guest_email}</p>
                 </div>
               </div>
@@ -123,14 +123,14 @@ export default function AdminFichaHuesped() {
               <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
                 <Calendar className="w-5 h-5 text-gray-400" />
                 <div>
-                  <p className="text-xs text-gray-500">Check-in</p>
+                  <p className="text-xs text-gray-500">Entrada</p>
                   <p className="font-medium text-gray-800">{r.check_in}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
                 <Calendar className="w-5 h-5 text-gray-400" />
                 <div>
-                  <p className="text-xs text-gray-500">Check-out</p>
+                  <p className="text-xs text-gray-500">Salida</p>
                   <p className="font-medium text-gray-800">{r.check_out}</p>
                 </div>
               </div>
@@ -162,8 +162,8 @@ export default function AdminFichaHuesped() {
               >
                 {STATUS_LABELS[r.status] ?? r.status}
               </span>
-              {r.checked_in_at && <span className="text-sm text-green-600">Check-in: {new Date(r.checked_in_at).toLocaleString('es-AR')}</span>}
-              {r.checked_out_at && <span className="text-sm text-gray-600">Check-out: {new Date(r.checked_out_at).toLocaleString('es-AR')}</span>}
+              {r.checked_in_at && <span className="text-sm text-green-600">Entrada: {new Date(r.checked_in_at).toLocaleString('es-AR')}</span>}
+              {r.checked_out_at && <span className="text-sm text-gray-600">Salida: {new Date(r.checked_out_at).toLocaleString('es-AR')}</span>}
             </div>
             {r.special_requests && (
               <div className="mt-3 p-3 bg-cyan-50 rounded-lg border border-cyan-100">

@@ -23,7 +23,7 @@ export default function GuestAuthPage() {
     const { error: err } = await signIn(email, password);
     setLoading(false);
     if (err) {
-      setError(err.message || 'Error al iniciar sesión. Revisá email y contraseña.');
+      setError(err.message || 'Error al iniciar sesión. Revisá correo y contraseña.');
       return;
     }
     navigate(returnTo, { replace: true });
@@ -36,7 +36,7 @@ export default function GuestAuthPage() {
     const { error: err } = await signUp(email, password, { displayName: displayName || undefined });
     setLoading(false);
     if (err) {
-      setError(err.message || 'Error al registrarse. El email puede estar en uso.');
+      setError(err.message || 'Error al registrarse. El correo puede estar en uso.');
       return;
     }
     setRegisterSuccess(true);
@@ -92,7 +92,7 @@ export default function GuestAuthPage() {
         {tab === 'login' ? (
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Correo electrónico *</label>
               <input
                 type="email"
                 required
@@ -134,7 +134,7 @@ export default function GuestAuthPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Correo electrónico *</label>
               <input
                 type="email"
                 required
