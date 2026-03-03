@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useSearchParams, Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { Image } from '../../lib/supabase';
 import { useHotels } from '../../hooks/useHotels';
@@ -7,6 +8,7 @@ import { Plus, Pencil, Trash2, X, Upload } from 'lucide-react';
 const BUCKET = 'hotel-images';
 
 export default function AdminImagenes() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const { hotels } = useHotels();
   const [images, setImages] = useState<(Image & { hotel_name?: string })[]>([]);
   const [loading, setLoading] = useState(true);
@@ -24,6 +26,7 @@ export default function AdminImagenes() {
     sort_order: 0,
   });
   const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const openedFromUrlRef = useRef(false);
 
   const loadImages = async () => {
     const { data, error: err } = await supabase
@@ -45,6 +48,26 @@ export default function AdminImagenes() {
   useEffect(() => {
     loadImages();
   }, []);
+
+  // Abrir modal con hotel y habitación preseleccionados si vienen por URL (ej. desde Habitaciones → Subir foto)
+  useEffect(() => {
+    const hotelId = searchParams.get('hotelId');
+    const roomId = searchParams.get('roomId');
+    if (!hotelId || hotels.length === 0 || openedFromUrlRef.current) return;
+    const hotel = hotels.find((h) => h.id === hotelId);
+    if (!hotel) return;
+    openedFromUrlRef.current = true;
+    setForm((prev) => ({
+      ...prev,
+      hotel_id: hotelId,
+      room_id: roomId || '',
+      alt_text: prev.alt_text || 'Imagen',
+    }));
+    setEditing(null);
+    setUploadFile(null);
+    setModalOpen(true);
+    setSearchParams({}, { replace: true });
+  }, [hotels, searchParams, setSearchParams]);
 
   useEffect(() => {
     if (hotels.length > 0 && images.length > 0) {
@@ -227,8 +250,14 @@ export default function AdminImagenes() {
             </p>
             <form onSubmit={handleSubmit} className="p-4 space-y-4">
               {hotels.length === 0 && (
-                <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-sm">
-                  No hay alojamientos cargados. Podés crear uno en <strong>Hoteles / Cabañas</strong> para asociar la imagen, o subir igual (se guardará como general).
+                <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-sm space-y-2">
+                  <p>No hay alojamientos cargados. Para asignar imágenes a un hotel o a una habitación:</p>
+                  <ol className="list-decimal list-inside space-y-1">
+                    <li>Creá un alojamiento en <Link to="/admin/hoteles" className="text-cyan-600 font-medium hover:underline">Hoteles / Cabañas</Link>.</li>
+                    <li>Creá habitaciones (doble, suite, etc.) en <Link to="/admin/habitaciones" className="text-cyan-600 font-medium hover:underline">Habitaciones</Link>.</li>
+                    <li>Volvé acá y elegí Alojamiento y Habitación al subir la imagen.</li>
+                  </ol>
+                  <p className="pt-1">Podés subir igual (se guardará como general y aparecerá en la Galería).</p>
                 </div>
               )}
               <div>

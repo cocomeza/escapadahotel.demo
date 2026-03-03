@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { Room, Hotel } from '../../lib/supabase';
 import { useHotels } from '../../hooks/useHotels';
-import { Plus, Pencil, Trash2, X } from 'lucide-react';
+import { Plus, Pencil, Trash2, X, ImageIcon } from 'lucide-react';
 import { formatearPrecio } from '../../lib/constants';
 
 export default function AdminHabitaciones() {
@@ -139,6 +140,7 @@ export default function AdminHabitaciones() {
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Precio/noche</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Capacidad</th>
                 <th className="w-24 py-3 px-4"></th>
+                <th className="w-28 py-3 px-4 text-left font-semibold text-gray-700">Foto</th>
               </tr>
             </thead>
             <tbody>
@@ -150,13 +152,23 @@ export default function AdminHabitaciones() {
                   <td className="py-3 px-4 text-gray-600">{r.capacity}</td>
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-2">
-                      <button onClick={() => openEdit(r)} className="p-2 text-cyan-600 hover:bg-cyan-50 rounded-lg">
+                      <button onClick={() => openEdit(r)} className="p-2 text-cyan-600 hover:bg-cyan-50 rounded-lg" title="Editar">
                         <Pencil className="w-4 h-4" />
                       </button>
-                      <button onClick={() => handleDelete(r.id)} className="p-2 text-red-600 hover:bg-red-50 rounded-lg">
+                      <button onClick={() => handleDelete(r.id)} className="p-2 text-red-600 hover:bg-red-50 rounded-lg" title="Eliminar">
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
+                  </td>
+                  <td className="py-3 px-4">
+                    <Link
+                      to={`/admin/imagenes?hotelId=${r.hotel_id}&roomId=${r.id}`}
+                      className="inline-flex items-center gap-1 text-sm text-cyan-600 hover:text-cyan-700 font-medium"
+                      title="Subir foto de esta habitación"
+                    >
+                      <ImageIcon className="w-4 h-4" />
+                      Subir foto
+                    </Link>
                   </td>
                 </tr>
               ))}
