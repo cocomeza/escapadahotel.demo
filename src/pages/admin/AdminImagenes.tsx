@@ -15,6 +15,7 @@ export default function AdminImagenes() {
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [form, setForm] = useState({
     hotel_id: '',
     room_id: '',
@@ -31,6 +32,7 @@ export default function AdminImagenes() {
       .order('sort_order', { ascending: true });
     if (err) setError(err.message);
     else {
+      setError(null);
       const withHotel = (data ?? []).map((img) => ({
         ...img,
         hotel_name: hotels.find((h) => h.id === img.hotel_id)?.name,
@@ -118,6 +120,8 @@ export default function AdminImagenes() {
         if (err) throw err;
       }
       setModalOpen(false);
+      setSuccessMessage(editing ? 'Imagen actualizada.' : 'Imagen guardada.');
+      setTimeout(() => setSuccessMessage(null), 4000);
       loadImages();
     } catch (err: unknown) {
       const msg =
@@ -137,7 +141,11 @@ export default function AdminImagenes() {
     if (!confirm('¿Eliminar esta imagen?')) return;
     const { error: err } = await supabase.from('images').delete().eq('id', id);
     if (err) setError(err.message);
-    else loadImages();
+    else {
+      setSuccessMessage('Imagen eliminada.');
+      setTimeout(() => setSuccessMessage(null), 4000);
+      loadImages();
+    }
   };
 
   return (
@@ -157,6 +165,9 @@ export default function AdminImagenes() {
 
       {error && (
         <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">{error}</div>
+      )}
+      {successMessage && (
+        <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm">{successMessage}</div>
       )}
 
       {loading ? (

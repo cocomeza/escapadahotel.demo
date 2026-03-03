@@ -41,6 +41,10 @@ Para que **Nueva / Subir** funcione y las fotos se vean en la app:
 
 Si el bucket es público y las políticas están bien, al hacer clic en **Nueva / Subir**, elegir un hotel, subir un archivo y guardar, la imagen debería verse en la lista y en la web.
 
+### Si el CRUD de Imágenes no funciona (no lista, no guarda, no elimina)
+
+Puede ser que la tabla **images** tenga RLS activado en Supabase y no tenga políticas. En **SQL Editor** ejecutá el contenido de **`supabase/migrations/005_images_rls.sql`**: así la Galería puede leer las imágenes y el admin puede crear, editar y borrarlas.
+
 ---
 
 ## Importante
