@@ -76,3 +76,6 @@ export function getRoomPlaceholderImage(roomName: string): string {
   }
   return 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800';
 }
+
+// Imagen por defecto para la ficha del hotel (cuando falla la carga o no hay main_image)
+export const HOTEL_PLACEHOLDER_IMAGE = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800';

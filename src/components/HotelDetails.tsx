@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X, Star, MapPin, Wifi, Coffee, Car, Wind, Utensils, ChevronLeft, ChevronRight } from 'lucide-react';
 import { HotelWithDetails } from '../lib/supabase';
-import { formatearPrecio } from '../lib/constants';
+import { formatearPrecio, HOTEL_PLACEHOLDER_IMAGE } from '../lib/constants';
 
 interface HotelDetailsProps {
   hotel: HotelWithDetails;
@@ -18,9 +18,33 @@ const iconMap: { [key: string]: React.ComponentType<{ className?: string }> } = 
   utensils: Utensils,
 };
 
+function RoomImageWithFallback({ src, alt }: { src: string; alt: string }) {
+  const [imgSrc, setImgSrc] = useState(src);
+  useEffect(() => {
+    setImgSrc(src);
+  }, [src]);
+  return (
+    <img
+      src={imgSrc}
+      alt={alt}
+      className="w-full h-full object-cover"
+      onError={() => setImgSrc(HOTEL_PLACEHOLDER_IMAGE)}
+    />
+  );
+}
+
 export default function HotelDetails({ hotel, onClose, onReservar, onContactar }: HotelDetailsProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const allImages = [hotel.main_image, ...(hotel.images?.map(img => img.url) || [])];
+  const [failedUrls, setFailedUrls] = useState<Set<string>>(new Set());
+  const firstImage = hotel.images?.[0]?.url;
+  const mainOrFirst = hotel.main_image || firstImage || HOTEL_PLACEHOLDER_IMAGE;
+  const restImages = hotel.images?.map((img) => img.url).filter(Boolean) || [];
+  const allImages = [mainOrFirst, ...restImages.filter((url) => url !== mainOrFirst)];
+  const currentSrc = failedUrls.has(allImages[currentImageIndex]) ? HOTEL_PLACEHOLDER_IMAGE : allImages[currentImageIndex];
+
+  const handleImgError = () => {
+    setFailedUrls((prev) => new Set(prev).add(allImages[currentImageIndex]));
+  };
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
@@ -57,9 +81,10 @@ export default function HotelDetails({ hotel, onClose, onReservar, onContactar }
 
           <div className="relative h-64 sm:h-80 md:h-96 bg-gray-900">
             <img
-              src={allImages[currentImageIndex]}
+              src={currentSrc}
               alt={hotel.name}
               className="w-full h-full object-cover"
+              onError={handleImgError}
             />
             {allImages.length > 1 && (
               <>
@@ -141,18 +166,14 @@ export default function HotelDetails({ hotel, onClose, onReservar, onContactar }
                 <h3 className="text-2xl font-bold text-gray-800 mb-4">Habitaciones disponibles</h3>
                 <div className="space-y-4">
                   {hotel.rooms.map((room) => {
-                    const roomImage = hotel.images?.find((img) => img.room_id === room.id)?.url || hotel.main_image;
+                    const roomImage = hotel.images?.find((img) => img.room_id === room.id)?.url || hotel.main_image || firstImage || HOTEL_PLACEHOLDER_IMAGE;
                     return (
                       <div
                         key={room.id}
                         className="border border-gray-200 rounded-lg overflow-hidden hover:border-cyan-500 transition-colors flex flex-col sm:flex-row"
                       >
                         <div className="w-full sm:w-48 h-40 sm:h-auto flex-shrink-0">
-                          <img
-                            src={roomImage}
-                            alt={room.name}
-                            className="w-full h-full object-cover"
-                          />
+                          <RoomImageWithFallback src={roomImage} alt={room.name} />
                         </div>
                         <div className="flex-1 p-6 flex flex-col md:flex-row justify-between md:items-center gap-4">
                           <div className="flex-1">

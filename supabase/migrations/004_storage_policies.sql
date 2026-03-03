@@ -1,6 +1,10 @@
 -- Políticas de Storage para el bucket hotel-images
 -- Ejecutá esto en Supabase → SQL Editor si la subida desde el panel Admin falla.
 -- El bucket "hotel-images" tiene que existir (crealo en Storage si no está).
+--
+-- IMPORTANTE: Para que las imágenes se vean en la web pública (visitantes sin login),
+-- en Supabase andá a Storage → hotel-images → Configuration y activá "Public bucket".
+-- Si el bucket es privado, la URL de la imagen devuelve 403 y se ve rota.
 
 -- Permite a usuarios autenticados SUBIR archivos al bucket hotel-images
 DROP POLICY IF EXISTS "hotel_images_allow_authenticated_upload" ON storage.objects;

@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Star, MapPin } from 'lucide-react';
 import { HotelWithDetails } from '../lib/supabase';
-import { formatearPrecio } from '../lib/constants';
+import { formatearPrecio, HOTEL_PLACEHOLDER_IMAGE } from '../lib/constants';
 
 interface HotelCardProps {
   hotel: HotelWithDetails;
@@ -9,6 +10,15 @@ interface HotelCardProps {
 }
 
 export default function HotelCard({ hotel, onSelect }: HotelCardProps) {
+  const firstImage = hotel.images?.[0]?.url;
+  const [imgSrc, setImgSrc] = useState(
+    () => hotel.main_image || firstImage || HOTEL_PLACEHOLDER_IMAGE
+  );
+
+  const handleImgError = () => {
+    setImgSrc(firstImage || HOTEL_PLACEHOLDER_IMAGE);
+  };
+
   return (
     <article
       role="button"
@@ -20,9 +30,10 @@ export default function HotelCard({ hotel, onSelect }: HotelCardProps) {
     >
       <div className="relative h-48 sm:h-52 md:h-56 overflow-hidden">
         <img
-          src={hotel.main_image}
+          src={imgSrc}
           alt=""
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          onError={handleImgError}
         />
         <div className="absolute bottom-3 left-3 bg-white/95 px-2.5 py-1 rounded-full flex items-center gap-1">
           <Star className="w-4 h-4 text-amber-400 fill-current" aria-hidden />
