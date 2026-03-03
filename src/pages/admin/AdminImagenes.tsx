@@ -146,8 +146,7 @@ export default function AdminImagenes() {
         <h1 className="text-2xl font-bold text-gray-800">Imágenes</h1>
         <button
           onClick={openCreate}
-          disabled={hotels.length === 0}
-          className="inline-flex items-center gap-2 bg-cyan-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-cyan-600 disabled:opacity-50"
+          className="inline-flex items-center gap-2 bg-cyan-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-cyan-600"
         >
           <Plus className="w-5 h-5" />
           Nueva / Subir
@@ -199,6 +198,11 @@ export default function AdminImagenes() {
               </button>
             </div>
             <form onSubmit={handleSubmit} className="p-4 space-y-4">
+              {hotels.length === 0 && (
+                <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-sm">
+                  No hay alojamientos cargados. Podés crear uno en <strong>Hoteles / Cabañas</strong> para asociar la imagen, o subir igual (se guardará como general).
+                </div>
+              )}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Alojamiento</label>
                 <select
