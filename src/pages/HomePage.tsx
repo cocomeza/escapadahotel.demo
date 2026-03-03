@@ -13,6 +13,7 @@ export default function HomePage() {
   // Para la web de un hotel: tomamos el primer hotel (Hotel Escapada) y mostramos sus habitaciones
   const hotel = hotels[0] ?? null;
   const rooms = hotel?.rooms ?? [];
+  const galleryImages = hotel?.images?.filter((img) => !img.room_id).map((img) => ({ url: img.url, alt_text: img.alt_text })) ?? [];
 
   const handleReservar = (hotelId: string, roomId: string) => {
     navigate(`/reservar/${hotelId}?roomId=${roomId}`);
@@ -113,7 +114,7 @@ export default function HomePage() {
       )}
 
       <Features />
-      <Gallery />
+      <Gallery images={galleryImages} />
     </>
   );
 }

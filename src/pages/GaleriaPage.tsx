@@ -11,6 +11,7 @@ export default function GaleriaPage() {
       const { data } = await supabase
         .from('images')
         .select('url, alt_text')
+        .is('room_id', null)
         .order('sort_order', { ascending: true });
       if (data && data.length > 0) {
         setImages(data);
